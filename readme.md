@@ -1,24 +1,33 @@
+# Getting started
+
 The processes should be started in the following order
 
-# Install all the python dependencies
+1. Install all the python dependencies
+```
+pip install requirements.txt
+```
+2. Start a redis server to maintain the task queue
 
-`pip install requirements.txt`
+```
+docker run -d -p 6379:6379 redis
+```
 
-# Start a redis server to maintain the task queue
+3. Start the flask server to maintain the status completion for each video
 
-`docker run -d -p 6379:6379 redis`
+```
+python server.py
+```
 
-# Start the flask server to maintain the status completion for each video
+4. Starting n-number of worker
 
-`python server.py`
+```
+celery -A tasks worker --loglevel=INFO
+```
 
-# Starting n-number of worker
+5. Assign tasks the worker
 
-`celery -A tasks worker --loglevel=INFO`
 
-# Assigning tasks the worker
-
-Tasks can be assigned to the workers by running the python app by:
-
-`python app.py`
+```
+python app.py
+```
 
